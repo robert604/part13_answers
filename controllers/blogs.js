@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
 const { Blog, User } = require('../models')
-const { errorHandler,tokenExtractor,blogFinder } = require('./middleware')
+const { tokenExtractor,blogFinder } = require('./middleware')
 
 router.get('/', async (req, res) => {
   const blogs = await Blog.findAll({
@@ -19,7 +19,9 @@ router.get('/', async (req, res) => {
 router.post('/'//,tokenExtractor
 , async (req, res,next) => {
   try {
+
     //const user = await User.findByPk(req.decodedToken.id)
+
     const user = await User.findOne()
     console.log('post user',user)
     const blog = await Blog.create({...req.body,userId: user.id,date: new Date()})
@@ -46,7 +48,7 @@ router.delete('/:id', blogFinder, async (req, res) => {
   res.status(204).end()
 })
 
-router.put('/:id', blogFinder,errorHandler, async (req, res,next) => {
+router.put('/:id', blogFinder, async (req, res,next) => {
   if (req.blog) {
     req.blog.likes = req.body.likes
     await req.blog.save()

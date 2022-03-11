@@ -1,10 +1,16 @@
 
+
 const { Blog, User } = require('../models')
 const { SECRET } = require('../util/config')
 
 const errorHandler = (error,req,res,next) => {
-  console.error('got an error---------',error.message);
-  return res.status(400).send({error:`got error${error.message}`})
+  let mess = JSON.stringify(//error.message || 
+  error)
+  if(/Validation isEmail/.test(mess)) {
+    mess = "Username must be an email address"
+  }
+  console.error('got an error---------',mess);
+  return res.status(400).send({error: `${mess}`})
 }
 
 const tokenExtractor = (req, res, next) => {

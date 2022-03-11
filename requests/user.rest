@@ -4,8 +4,8 @@ POST http://localhost:3001/api/users
 Content-Type: application/json
 
 {
-  "username": "username1",
-  "name": "name1"
+  "username": "username2",
+  "name": "name2"
 }
 ###
-PUT http://localhost:3001/api/users/usernamez
+PUT http://localhost:3001/api/users/username22
