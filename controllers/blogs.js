@@ -1,37 +1,34 @@
 const router = require('express').Router()
 
-const { Blog } = require('../models')
-
-const errorHandler = (error,req,res,next) => {
-  console.error('got an error---------',error.message);
-  return res.status(400).send({error:`got error${error.message}`})
-}
+const { Blog, User } = require('../models')
+const { errorHandler,tokenExtractor,blogFinder } = require('./middleware')
 
 router.get('/', async (req, res) => {
-  const blogs = await Blog.findAll()
+  const blogs = await Blog.findAll({
+    attributes: {
+      exclude: ['userId']
+    },
+    include: {
+      model: User,
+      attributes: ['name']
+    }
+  })
   res.json(blogs)
 })
 
-router.post('/', async (req, res,next) => {
+router.post('/'//,tokenExtractor
+, async (req, res,next) => {
   try {
-    const blog = await Blog.create(req.body)
+    //const user = await User.findByPk(req.decodedToken.id)
+    const user = await User.findOne()
+    console.log('post user',user)
+    const blog = await Blog.create({...req.body,userId: user.id,date: new Date()})
     res.json(blog)
   } catch(error) {
     next(error)    
     //return res.status(400).json({ error })
   }
 })
-
-const blogFinder = async (req, res, next) => {
-  try {
-    req.blog = await Blog.findByPk(req.params.id)
-    next()
-  } catch(error) {
-    next(error)
-  }
-}
-
-
 
 
 router.get('/:id', blogFinder, async (req, res) => {

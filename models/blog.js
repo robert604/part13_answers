@@ -24,11 +24,19 @@ Blog.init({
   likes: {
     type: DataTypes.INTEGER,
     defaultValue: 0
-  }
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: sequelize.literal('NOW()')
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    defaultValue: sequelize.literal('NOW()')
+  }  
 },{
   sequelize,
   underscored: true,
-  timestamps: false,
+  timestamps: true,
   modelName: 'blog'
 })
 
