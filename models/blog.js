@@ -21,6 +21,10 @@ Blog.init({
     type: DataTypes.TEXT,
     allowNull: true
   },
+  userToken: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  },  
   likes: {
     type: DataTypes.INTEGER,
     defaultValue: 0

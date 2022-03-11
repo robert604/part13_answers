@@ -9,3 +9,11 @@ Content-Type: application/json
 }
 ###
 PUT http://localhost:3001/api/users/username22
+###
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+  "username": "username2",
+  "password": "secret"
+}

@@ -1,12 +1,13 @@
 const router = require('express').Router()
 
-const { Blog, User } = require('../models')
+const { Blog, User, UserToken } = require('../models')
 const { tokenExtractor,blogFinder } = require('./middleware')
+
 
 router.get('/', async (req, res) => {
   const blogs = await Blog.findAll({
     attributes: {
-      exclude: ['userId']
+      exclude: ['userId'],
     },
     include: {
       model: User,
@@ -16,15 +17,14 @@ router.get('/', async (req, res) => {
   res.json(blogs)
 })
 
-router.post('/'//,tokenExtractor
+router.post('/',tokenExtractor
 , async (req, res,next) => {
   try {
+    const user = await User.findByPk(req.decodedToken.id)
 
-    //const user = await User.findByPk(req.decodedToken.id)
-
-    const user = await User.findOne()
+    //const user = await User.findOne()
     console.log('post user',user)
-    const blog = await Blog.create({...req.body,userId: user.id,date: new Date()})
+    const blog = await Blog.create({...req.body,userId: user.id,userToken:req.token,date: new Date()})
     res.json(blog)
   } catch(error) {
     next(error)    
