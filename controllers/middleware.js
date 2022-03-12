@@ -6,6 +6,10 @@ const errorHandler = (error,req,res,next) => {
   let mess = error.message || JSON.stringify(error)
   if(/Validation isEmail/.test(mess)) {
     mess = "Username must be an email address"
+  } else if(/Validation min on year/.test(mess)) {
+    mess = "Year must be at least 1991"
+  } else if(/Validation max on year/.test(mess)) {
+    mess = "Year cannot be greater than current year"
   }
   console.error('got an error---',mess);
   return res.status(400).send({error: `${mess}`})

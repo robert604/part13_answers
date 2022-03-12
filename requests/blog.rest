@@ -4,13 +4,14 @@ GET http://localhost:3001/api/blogs/9
 ###
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMiIsImlkIjoyLCJpYXQiOjE2NDcwMjA1MTJ9.jV-l8gh_atzEUIwR8xfGUYKbiHFEkr99w5DlO5XcYbI
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMUBtYWlsLmNvbSIsImlkIjoxLCJpYXQiOjE2NDcxMTgwOTF9.n8IDjeLIrVj5pZW6rgvR17lGmZ8ln7QtRsCDUfX3_Wo
 
 {
-  "author": "authorx",
-  "url": "urlx",
-  "title": "titlex",
-  "likes": 10
+  "author": "authorz",
+  "url": "urlz",
+  "title": "titlez",
+  "likes": 10,
+  "year":2022
 }
 ###
 DELETE http://localhost:3001/api/blogs/20

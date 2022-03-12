@@ -29,6 +29,7 @@ router.get('/', async (req, res) => {
   const blogs = await Blog.findAll({
     attributes: {
       exclude: ['userId'],
+      include: ['year']
     },
     include: {
       model: User,
@@ -45,10 +46,10 @@ router.get('/', async (req, res) => {
 router.post('/',tokenExtractor,async (req, res,next) => {
   try {
     const user = await User.findByPk(req.decodedToken.id)
-
+    if(!user) throw new Error('You must be logged in to create a blog')
     //const user = await User.findOne()
-    console.log('post user',user)
-    const blog = await Blog.create({...req.body,userId: user.id,userToken:req.token,date: new Date()})
+    console.log('post blog',req.body)
+    const blog = await Blog.create({...req.body,userId: user.id,usertoken:req.token,date: new Date()})
     res.json(blog)
   } catch(error) {
     next(error)    
@@ -68,7 +69,7 @@ router.get('/:id', blogFinder, async (req, res) => {
 router.delete('/:id',tokenExtractor, blogFinder, async (req, res,next) => {
   try {
     if (req.blog) {
-      const decodedToken = jwt.verify(req.blog.userToken, SECRET)
+      const decodedToken = jwt.verify(req.blog.usertoken, SECRET)
 
       if(decodedToken.id!==req.decodedToken.id) {
         throw new Error('Only the creator of the blog can delete it')

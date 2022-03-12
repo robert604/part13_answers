@@ -4,8 +4,8 @@ POST http://localhost:3001/api/users
 Content-Type: application/json
 
 {
-  "username": "username2",
-  "name": "name2"
+  "username": "username1@mail.com",
+  "name": "name1"
 }
 ###
 PUT http://localhost:3001/api/users/username1@mail.com
@@ -15,6 +15,6 @@ POST http://localhost:3001/api/login
 Content-Type: application/json
 
 {
-  "username": "username2",
+  "username": "username1@mail.com",
   "password": "secret"
 }

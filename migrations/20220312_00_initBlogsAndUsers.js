@@ -19,7 +19,7 @@ const up = async ({context:queryInterface}) => {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    userToken: {
+    usertoken: {
       type: DataTypes.TEXT,
       allowNull: true
     },  
@@ -27,11 +27,11 @@ const up = async ({context:queryInterface}) => {
       type: DataTypes.INTEGER,
       defaultValue: 0
     },
-    createdAt: {
+    created_at: {
       type: DataTypes.DATE,
       defaultValue: sequelize.literal('NOW()')
     },
-    updatedAt: {
+    updated_at: {
       type: DataTypes.DATE,
       defaultValue: sequelize.literal('NOW()')
     }  
@@ -54,11 +54,11 @@ const up = async ({context:queryInterface}) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    createdAt: {
+    created_at: {
       type: DataTypes.DATE,
       defaultValue: sequelize.literal('NOW()')
     },
-    updatedAt: {
+    updated_at: {
       type: DataTypes.DATE,
       defaultValue: sequelize.literal('NOW()')
     } 

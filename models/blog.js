@@ -21,7 +21,7 @@ Blog.init({
     type: DataTypes.TEXT,
     allowNull: true
   },
-  userToken: {
+  usertoken: {
     type: DataTypes.TEXT,
     allowNull: true
   },  
@@ -29,14 +29,18 @@ Blog.init({
     type: DataTypes.INTEGER,
     defaultValue: 0
   },
-  createdAt: {
+  year: {
+    type: DataTypes.INTEGER,
+    validate: { min:1991, max: new Date().getFullYear()}
+  }
+  /*created_at: {
     type: DataTypes.DATE,
     defaultValue: sequelize.literal('NOW()')
   },
-  updatedAt: {
+  updated_at: {
     type: DataTypes.DATE,
     defaultValue: sequelize.literal('NOW()')
-  }  
+  } */ 
 },{
   sequelize,
   underscored: true,
