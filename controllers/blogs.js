@@ -7,6 +7,7 @@ const { Op } = require('sequelize')
 
 router.get('/', async (req, res) => {
   console.log('search',req.query.search)
+
   let where = {}
   if(req.query.search) {
     const search = {
@@ -33,7 +34,10 @@ router.get('/', async (req, res) => {
       model: User,
       attributes: ['name']
     },
-    where
+    where,
+    order: [
+      ['likes','DESC']
+    ]
   })
   res.json(blogs)
 })
