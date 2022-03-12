@@ -13,7 +13,8 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZ
   "likes": 10
 }
 ###
-DELETE http://localhost:3001/api/blogs/18
+DELETE http://localhost:3001/api/blogs/20
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMiIsImlkIjoyLCJpYXQiOjE2NDcwNDQ3NzZ9.gW4lFvjJ1Fd-wj-Pls3qWuqw9wyja2Z3OkCf0cavKcg
 ###
 PUT http://localhost:3001/api/blogs/100
 Content-Type: application/json

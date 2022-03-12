@@ -1,5 +1,6 @@
 const router = require('express').Router()
-
+const jwt = require('jsonwebtoken')
+const { SECRET } = require('../util/config')
 const { Blog, User, UserToken } = require('../models')
 const { tokenExtractor,blogFinder } = require('./middleware')
 
@@ -17,8 +18,7 @@ router.get('/', async (req, res) => {
   res.json(blogs)
 })
 
-router.post('/',tokenExtractor
-, async (req, res,next) => {
+router.post('/',tokenExtractor,async (req, res,next) => {
   try {
     const user = await User.findByPk(req.decodedToken.id)
 
@@ -41,11 +41,21 @@ router.get('/:id', blogFinder, async (req, res) => {
   }
 })
 
-router.delete('/:id', blogFinder, async (req, res) => {
-  if (req.blog) {
-    await req.blog.destroy()
+router.delete('/:id',tokenExtractor, blogFinder, async (req, res,next) => {
+  try {
+    if (req.blog) {
+      const decodedToken = jwt.verify(req.blog.userToken, SECRET)
+
+      if(decodedToken.id!==req.decodedToken.id) {
+        throw new Error('Only the creator of the blog can delete it')
+      }
+      await req.blog.destroy()
+    }
+    res.status(204).end()
+  } catch(error) {
+    console.log('delete error',error)
+    next(error)
   }
-  res.status(204).end()
 })
 
 router.put('/:id', blogFinder, async (req, res,next) => {

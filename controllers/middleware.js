@@ -3,8 +3,7 @@ const { Blog, User } = require('../models')
 const { SECRET } = require('../util/config')
 
 const errorHandler = (error,req,res,next) => {
-  let mess = JSON.stringify(//error.message || 
-  error)
+  let mess = error.message || JSON.stringify(error)
   if(/Validation isEmail/.test(mess)) {
     mess = "Username must be an email address"
   }

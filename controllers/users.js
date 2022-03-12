@@ -36,11 +36,11 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-router.put('/:username' //,tokenExtractor
+router.put('/:username' ,tokenExtractor
 , async (req, res,next) => {
   try {
-    //const user = await User.findByPk(req.decodedToken.id)  
-    const user = await User.findOne()
+    const user = await User.findByPk(req.decodedToken.id)  
+    //const user = await User.findOne()
     if (user) {
       user.username = req.params.username
       await user.save()   
