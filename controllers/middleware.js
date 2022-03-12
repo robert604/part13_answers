@@ -7,7 +7,7 @@ const errorHandler = (error,req,res,next) => {
   if(/Validation isEmail/.test(mess)) {
     mess = "Username must be an email address"
   }
-  console.error('got an error---------',mess);
+  console.error('got an error---',mess);
   return res.status(400).send({error: `${mess}`})
 }
 
