@@ -3,9 +3,16 @@ const jwt = require('jsonwebtoken')
 const { SECRET } = require('../util/config')
 const { Blog, User, UserToken } = require('../models')
 const { tokenExtractor,blogFinder } = require('./middleware')
-
+const { Op } = require('sequelize')
 
 router.get('/', async (req, res) => {
+  console.log('search',req.query.search)
+  const where = {}
+  if(req.query.search) {
+    where.title = {
+      [Op.iLike]:'%'+req.query.search+'%'
+    }
+  }
   const blogs = await Blog.findAll({
     attributes: {
       exclude: ['userId'],
@@ -13,7 +20,8 @@ router.get('/', async (req, res) => {
     include: {
       model: User,
       attributes: ['name']
-    }
+    },
+    where
   })
   res.json(blogs)
 })
