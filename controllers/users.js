@@ -1,6 +1,7 @@
 const router = require('express').Router()
 
 const { notEqual } = require('assert')
+const { user } = require('pg/lib/defaults')
 const { nextTick } = require('process')
 const { User,Blog } = require('../models')
 const { errorHandler,tokenExtractor,blogFinder } = require('./middleware')
@@ -29,7 +30,20 @@ router.post('/', async (req, res,next) => {
 })
 
 router.get('/:id', async (req, res) => {
-  const user = await User.findByPk(req.params.id)
+  const user = await User.findByPk(req.params.id,{
+    include:[
+
+      {
+        model:Blog,
+        as: 'rlblog',
+        attributes: { exclude: ['userId']},
+        through: {
+          attributes:[]
+        }
+
+      }
+    ]
+  })
   if (user) {
     res.json(user)
   } else {
