@@ -9,12 +9,22 @@ const { errorHandler,tokenExtractor,blogFinder } = require('./middleware')
 
 router.get('/', async (req, res) => {
   const users = await User.findAll({
-    include: {
-      model: Blog,
-      attributes: {
-        exclude: ['userId']
-      }
-    }
+    include: [
+      {
+        model: Blog,
+        attributes: {
+          exclude: ['userId']
+        }
+      },
+      {
+        model:Blog,
+        as: 'readings',
+        attributes: { exclude: ['userId']},
+        through: {
+          attributes:[]
+        }
+      }       
+    ]
   })
   res.json(users)
 })
@@ -32,15 +42,13 @@ router.post('/', async (req, res,next) => {
 router.get('/:id', async (req, res) => {
   const user = await User.findByPk(req.params.id,{
     include:[
-
       {
         model:Blog,
-        as: 'rlblog',
+        as: 'readings',
         attributes: { exclude: ['userId']},
         through: {
           attributes:[]
         }
-
       }
     ]
   })

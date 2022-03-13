@@ -17,7 +17,11 @@ const up = async ({context:queryInterface}) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {model:'blogs',key:'id'}
-    }, 
+    },
+    did_read: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   })
 }
 

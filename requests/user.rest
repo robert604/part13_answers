@@ -20,3 +20,11 @@ Content-Type: application/json
   "username": "username1@mail.com",
   "password": "secret"
 }
+###
+POST http://localhost:3001/api/readinglists
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "blogId":1
+}
