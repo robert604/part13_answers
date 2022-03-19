@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const jwt = require('jsonwebtoken')
 const { SECRET } = require('../util/config')
-const { Blog, User, UserToken } = require('../models')
+const { Blog, User, ReadingList } = require('../models')
 const { tokenExtractor,blogFinder } = require('./middleware')
 const { Op } = require('sequelize')
 
@@ -31,10 +31,17 @@ router.get('/', async (req, res) => {
       exclude: ['userId'],
       include: ['year']
     },
-    include: {
-      model: User,
-      attributes: ['name']
-    },
+    include: [
+      {
+        model: User,
+        attributes: ['name']
+      }/*,
+      {
+        model:ReadingList,
+        attributes: ['id','did_read'],
+        through: { attributes:[]}
+      }  */    
+    ],
     where,
     order: [
       ['likes','DESC']

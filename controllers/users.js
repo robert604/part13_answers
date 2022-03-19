@@ -3,7 +3,7 @@ const router = require('express').Router()
 const { notEqual } = require('assert')
 const { user } = require('pg/lib/defaults')
 const { nextTick } = require('process')
-const { User,Blog } = require('../models')
+const { User,Blog,ReadingList } = require('../models')
 const { errorHandler,tokenExtractor,blogFinder } = require('./middleware')
 
 
@@ -19,7 +19,9 @@ router.get('/', async (req, res) => {
       {
         model:Blog,
         as: 'readings',
-        attributes: { exclude: ['userId','usertoken','createdAt','updatedAt']},
+        attributes: {
+          exclude: ['userId','usertoken','createdAt','updatedAt'],
+        },
         through: {
           attributes:[]
         }
@@ -47,9 +49,10 @@ router.get('/:id', async (req, res) => {
         as: 'readings',
         attributes: { exclude: ['userId','usertoken','createdAt','updatedAt']},
         through: {
-          attributes:[]
+          attributes:['id','did_read']
         }
       }
+
     ]
   })
   if (user) {
