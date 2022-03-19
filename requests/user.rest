@@ -2,6 +2,8 @@ GET http://localhost:3001/api/users
 ###
 GET http://localhost:3001/api/users/1
 ###
+GET http://localhost:3001/api/users/1?read=true
+###
 POST http://localhost:3001/api/users
 Content-Type: application/json
 

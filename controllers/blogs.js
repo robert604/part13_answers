@@ -35,12 +35,7 @@ router.get('/', async (req, res) => {
       {
         model: User,
         attributes: ['name']
-      }/*,
-      {
-        model:ReadingList,
-        attributes: ['id','did_read'],
-        through: { attributes:[]}
-      }  */    
+      }   
     ],
     where,
     order: [
