@@ -13,17 +13,17 @@ router.get('/', async (req, res) => {
       {
         model: Blog,
         attributes: {
-          exclude: ['userId']
+          exclude: ['userId','usertoken','createdAt','updatedAt']
         }
       },
       {
         model:Blog,
         as: 'readings',
-        attributes: { exclude: ['userId']},
+        attributes: { exclude: ['userId','usertoken','createdAt','updatedAt']},
         through: {
           attributes:[]
         }
-      }       
+      }      
     ]
   })
   res.json(users)
@@ -45,7 +45,7 @@ router.get('/:id', async (req, res) => {
       {
         model:Blog,
         as: 'readings',
-        attributes: { exclude: ['userId']},
+        attributes: { exclude: ['userId','usertoken','createdAt','updatedAt']},
         through: {
           attributes:[]
         }
