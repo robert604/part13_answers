@@ -48,7 +48,7 @@ router.get('/:id', async (req, res) => {
   } else if(req.query.read==='false') {
     where = { '$readings.readingLists.did_read$':false }
   }
-  console.log('get',where) 
+
   const user = await User.findByPk(req.params.id,{
     include:
       {
@@ -57,17 +57,11 @@ router.get('/:id', async (req, res) => {
         attributes: { exclude: ['userId','usertoken','createdAt','updatedAt']},
         through: {
           attributes: ['id','did_read'],
-          where/*: {
-            '$readings.readingLists.did_read$':false
-          }      */    
+          where    
         },
-
-
       }
-    ,
-
   })
-  console.log('=====',user)
+
   if (user) {
     res.json(user)
   } else {
@@ -75,10 +69,21 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-router.put('/:username' ,tokenExtractor
-, async (req, res,next) => {
+router.put('/change/:id',async (req,res) => {
+  const user = await User.findByPk(req.params.id)
+  if(req.query.disabled==='true') {
+    user.disabled = true
+  } else if(req.query.disabled==='false') {
+    user.disabled = false
+  }
+  await user.save()
+  res.json(user)
+  //console.log('user put',user)
+})
+
+router.put('/:username' ,tokenExtractor, async (req, res,next) => {
   try {
-    const user = await User.findByPk(req.decodedToken.id)  
+    const user = req.decodedUser //await User.findByPk(req.decodedToken.id)  
     //const user = await User.findOne()
     if (user) {
       user.username = req.params.username

@@ -15,12 +15,15 @@ const errorHandler = (error,req,res,next) => {
   return res.status(400).send({error: `${mess}`})
 }
 
-const tokenExtractor = (req, res, next) => {
+const tokenExtractor = async (req, res, next) => {
   const authorization = req.get('authorization')
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
     try {
       req.token = authorization.substring(7)
       req.decodedToken = jwt.verify(req.token, SECRET)
+      const user = await User.findByPk(req.decodedToken.id)
+      req.decodedUser = user.disabled ? null : user
+      
     } catch{
       res.status(401).json({ error: 'token invalid' })
     }

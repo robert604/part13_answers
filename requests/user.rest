@@ -12,6 +12,8 @@ Content-Type: application/json
   "name": "name1"
 }
 ###
+PUT http://localhost:3001/api/users/change/1?disabled=false
+###
 PUT http://localhost:3001/api/users/username1@mail.com
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lcSIsImlkIjoxLCJpYXQiOjE2NDcwNDMxNjJ9.eUnuKVz91ovsY1njYVEilmlcH__6xzOypUV55Vsfro4
 ###
